@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://tools.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#453E3E"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/txt_titulo_config"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Configurações do Mapa"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lbl_tipo_mapa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Tipo de Mapa:"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_titulo_config" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup_mapa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/lbl_tipo_mapa">
+
+        <RadioButton
+            android:id="@+id/radio_vetorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vetorial (Padrão)"
+            android:textColor="@color/white"
+            android:buttonTint="#448C84"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/radio_satelite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Satélite"
+            android:textColor="@color/white"
+            android:buttonTint="#448C84"
+            android:textSize="16sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/lbl_navegacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Forma de Navegação:"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radioGroup_mapa" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup_navegacao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/lbl_navegacao">
+
+        <RadioButton
+            android:id="@+id/radio_north_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="North Up (Norte para Cima)"
+            android:textColor="@color/white"
+            android:buttonTint="#448C84"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/radio_course_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Course Up (Direção do Rumo)"
+            android:textColor="@color/white"
+            android:buttonTint="#448C84"
+            android:textSize="16sp" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/button_salvar_config"
+        android:layout_width="191dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#448C84"
+        android:text="Salvar"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

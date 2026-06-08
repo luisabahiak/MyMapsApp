@@ -1,6 +1,7 @@
 package com.example.mymaps;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -47,9 +48,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if(id == R.id.button_registrar){}
-        if(id == R.id.button_visualizar){}
-        if(id == R.id.button_config){}
+        if(id == R.id.button_registrar){
+            Intent i = new Intent(MainActivity.this, RegistrarTrilhaActivity.class);
+            startActivity(i);
+        }
+        if(id == R.id.button_visualizar){
+            Intent i = new Intent(MainActivity.this, ConsultarTrilhasActivity.class);
+            startActivity(i);
+        }
+        if(id == R.id.button_config){
+            Intent i = new Intent(MainActivity.this, ConfiguracaoActivity.class);
+            startActivity(i);
+        }
         if(id == R.id.button_sair){
             finish();
         }

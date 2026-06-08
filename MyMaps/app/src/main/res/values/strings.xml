@@ -5,4 +5,5 @@
     <string name="buttonConfig_txt">Configuração</string>
     <string name="buttonSair_txt">Sair</string>
     <string name="textViewMain_txt">Bem-vindo ao seu App de trilhas.</string>
+    <string name="title_activity_registrar_trilha">RegistrarTrilhaActivity</string>
 </resources>

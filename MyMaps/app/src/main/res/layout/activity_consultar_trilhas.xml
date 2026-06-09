@@ -70,6 +70,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#448C84"
         android:text="@string/buttonVoltar3_txt"
+        android:textColor="#FCFBFBFB"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

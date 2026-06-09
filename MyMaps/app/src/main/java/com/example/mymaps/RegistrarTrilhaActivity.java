@@ -92,11 +92,26 @@ public class RegistrarTrilhaActivity extends FragmentActivity implements OnMapRe
         btnStartStop = findViewById(R.id.btn_start_stop);
         btnVoltar = findViewById(R.id.buttonVoltar2);
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationProviderClient =
+                LocationServices.getFusedLocationProviderClient(this);
 
-        locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY)
-                .setIntervalMillis(3000)
-                .setMinUpdateIntervalMillis(1500)
+        // Obtém a última localização conhecida imediatamente
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            fusedLocationProviderClient.getLastLocation()
+                    .addOnSuccessListener(location -> {
+                        if (location != null) {
+                            processarNovaLocalizacao(location);
+                        }
+                    });
+        }
+
+        locationRequest = new LocationRequest.Builder(
+                Priority.PRIORITY_HIGH_ACCURACY,
+                3000
+        ).setMinUpdateIntervalMillis(1500)
                 .build();
 
         btnStartStop.setOnClickListener(new View.OnClickListener() {
@@ -251,19 +266,41 @@ public class RegistrarTrilhaActivity extends FragmentActivity implements OnMapRe
             }
         };
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            mMap.setMyLocationEnabled(true);
             fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
         }
+
     }
 
     private void atualizarElementosVisuaisMapa(Location location, LatLng latLngAtual) {
-        if (marcadorUsuario != null) marcadorUsuario.remove();
-        if (circuloAcuracia != null) circuloAcuracia.remove();
 
-        marcadorUsuario = mMap.addMarker(new MarkerOptions()
-                .position(latLngAtual)
-                .title("Sua Posição")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        if (marcadorUsuario == null) {
+            marcadorUsuario = mMap.addMarker(
+                    new MarkerOptions()
+                            .position(latLngAtual)
+                            .title("Sua posição")
+                            .anchor(0.5f, 1.0f)
+                            .icon(BitmapDescriptorFactory.fromResource(
+                                    R.drawable.mapa))
+            );
+
+
+        } else {
+
+            marcadorUsuario.setPosition(latLngAtual);
+            if(location.hasBearing()){
+                marcadorUsuario.setRotation(
+                        location.getBearing()
+                );
+            }
+
+        }
+        if (circuloAcuracia != null) circuloAcuracia.remove();
 
         circuloAcuracia = mMap.addCircle(new CircleOptions()
                 .center(latLngAtual)

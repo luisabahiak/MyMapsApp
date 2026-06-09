@@ -42,7 +42,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnConfig.setOnClickListener(this);
         btnSair.setOnClickListener(this);
 
-        startLocationUpdate();
+        if (!possuiPermissaoLocalizacao()) {
+            solicitarPermissaoLocalizacao();
+        }
+
     }
 
     @Override
@@ -64,44 +67,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             finish();
         }
     }
+    private boolean possuiPermissaoLocalizacao() {
 
-    private void startLocationUpdate() {
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED) {
-            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-            long timeInterval = 5*2000;
+        return ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+    private void solicitarPermissaoLocalizacao() {
 
-            locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY).build();
-
-            locationCallback = new LocationCallback() {
-                @Override
-                public void onLocationResult(LocationResult locationResult) {
-                    super.onLocationResult(locationResult);
-                    Location location = locationResult.getLastLocation();
-                }
-            };
-            fusedLocationProviderClient.requestLocationUpdates(locationRequest,locationCallback,null);
-        } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_LOCATION_UPDATES);
-        }
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                },
+                REQUEST_LOCATION_UPDATES
+        );
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode,permissions,grantResults);
-        if (requestCode == REQUEST_LOCATION_UPDATES) {
-            if(grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startLocationUpdate();
-            }
-            else {
-                Toast.makeText(this,
-                        "Sem permissão para mostrar atualizações da sua localização",
-                        Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }
-    }
 }

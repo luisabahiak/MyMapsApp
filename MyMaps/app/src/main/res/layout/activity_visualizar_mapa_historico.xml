@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,8 +12,10 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
         android:id="@+id/painel_metricas"
@@ -22,34 +25,35 @@
         android:background="#E6453E3E"
         android:orientation="vertical"
         android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/map_historico">
 
         <TextView
             android:id="@+id/txt_hist_nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="Nome da Trilha"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txt_hist_inicio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="Início: --/--/---- --:--:--"
             android:textColor="#CCCCCC"
-            android:textSize="14sp"
-            android:layout_marginBottom="8dp"/>
+            android:textSize="14sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#44FFFFFF"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:background="#44FFFFFF" />
 
         <GridLayout
             android:layout_width="match_parent"
@@ -62,20 +66,20 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:layout_marginBottom="4dp"
                 android:text="Distância: 0.00 km"
                 android:textColor="@color/white"
-                android:textSize="14sp"
-                android:layout_marginBottom="4dp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txt_hist_duracao"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:layout_marginBottom="4dp"
                 android:text="Duração: 00:00:00"
                 android:textColor="@color/white"
-                android:textSize="14sp"
-                android:layout_marginBottom="4dp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txt_hist_vel_max"
@@ -84,7 +88,7 @@
                 android:layout_columnWeight="1"
                 android:text="Vel. Máxima: 0.0 km/h"
                 android:textColor="@color/white"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txt_hist_vel_media"
@@ -93,9 +97,21 @@
                 android:layout_columnWeight="1"
                 android:text="Vel. Média: 0.0 km/h"
                 android:textColor="@color/white"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
         </GridLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonVoltar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#448C84"
+        android:text="@string/buttonVoltar2_txt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

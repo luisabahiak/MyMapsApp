@@ -63,6 +63,9 @@ public class RegistrarTrilhaActivity extends FragmentActivity implements OnMapRe
     private Chronometer chronometer;
     private TextView txtVelAtual, txtVelMaxima, txtDistancia;
     private Button btnStartStop;
+    private Button btnVoltar;
+
+
 
     private Location ultimaLocalizacao = null;
     private double distanciaTotal = 0.0;
@@ -87,6 +90,7 @@ public class RegistrarTrilhaActivity extends FragmentActivity implements OnMapRe
         txtVelMaxima = findViewById(R.id.txt_vel_maxima);
         txtDistancia = findViewById(R.id.txt_distancia);
         btnStartStop = findViewById(R.id.btn_start_stop);
+        btnVoltar = findViewById(R.id.buttonVoltar2);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -103,6 +107,13 @@ public class RegistrarTrilhaActivity extends FragmentActivity implements OnMapRe
                 } else {
                     pararMonitoramentoTrilha();
                 }
+            }
+        });
+
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -206,8 +217,8 @@ public class RegistrarTrilhaActivity extends FragmentActivity implements OnMapRe
         }
         ultimaLocalizacao = location;
 
-        txtVelAtual.setText(String.format("Velocidade: %.1f km/h", velocidadAtual));
-        txtVelMaxima.setText(String.format("Máxima: %.1f km/h", velocidadeMaxima));
+        txtVelAtual.setText(String.format("Vel. Instantânea: %.1f km/h", velocidadAtual));
+        txtVelMaxima.setText(String.format("Vel. Máxima: %.1f km/h", velocidadeMaxima));
         txtDistancia.setText(String.format("Distância: %.2f km", distanciaTotal));
 
         listaPontosTrajeto.add(latLngAtual);

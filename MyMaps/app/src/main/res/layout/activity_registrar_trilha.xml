@@ -13,15 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
         android:id="@+id/painel_informacoes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:layout_marginTop="80dp"
         android:background="#E6453E3E"
         android:elevation="8dp"
         android:orientation="vertical"
@@ -44,19 +45,19 @@
             android:id="@+id/txt_vel_atual"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Velocidade: 0.0 km/h"
+            android:layout_marginBottom="4dp"
+            android:text="Vel. Instantânea: 0.0 km/h"
             android:textColor="@color/white"
-            android:textSize="16sp"
-            android:layout_marginBottom="4dp"/>
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txt_vel_maxima"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Máxima: 0.0 km/h"
+            android:layout_marginBottom="4dp"
+            android:text="Vel. Máxima: 0.0 km/h"
             android:textColor="@color/white"
-            android:textSize="16sp"
-            android:layout_marginBottom="4dp"/>
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txt_distancia"
@@ -72,14 +73,29 @@
         android:id="@+id/btn_start_stop"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#448C84"
         android:elevation="8dp"
-        android:text="Iniciar Trilha"
+        android:text="@string/btn_start_stop_txt"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.075"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonVoltar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#448C84"
+        android:text="@string/buttonVoltar1_txt"
+        android:textColor="#F8F4F4"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.847"
+        app:layout_constraintStart_toEndOf="@+id/btn_start_stop" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

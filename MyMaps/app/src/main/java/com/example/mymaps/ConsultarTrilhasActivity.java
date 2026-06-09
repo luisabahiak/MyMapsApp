@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
@@ -21,6 +23,8 @@ public class ConsultarTrilhasActivity extends AppCompatActivity {
     private ListView listViewTrilhas;
     private Button btnLimparIntervalo, btnLimparTudo;
     private TrilhaDB trilhaDB;
+
+    private Button btnVoltar;
     private ArrayList<TrilhaModel> listaTrilhas;
     private ArrayAdapter<TrilhaModel> adapter;
 
@@ -28,11 +32,14 @@ public class ConsultarTrilhasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultar_trilhas);
+        EdgeToEdge.enable(this);
+
 
         trilhaDB = new TrilhaDB(this);
         listViewTrilhas = findViewById(R.id.list_view_trilhas);
         btnLimparIntervalo = findViewById(R.id.btn_limpar_intervalo);
         btnLimparTudo = findViewById(R.id.btn_limpar_tudo);
+        btnVoltar = findViewById(R.id.buttonVoltar3);
 
         inserirDadosMockados();
 
@@ -84,6 +91,13 @@ public class ConsultarTrilhasActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 abrirDialogoFiltroData();
+            }
+        });
+
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

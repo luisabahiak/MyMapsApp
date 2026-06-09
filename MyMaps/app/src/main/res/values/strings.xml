@@ -6,4 +6,8 @@
     <string name="buttonSair_txt">Sair</string>
     <string name="textViewMain_txt">Bem-vindo ao seu App de trilhas.</string>
     <string name="title_activity_registrar_trilha">RegistrarTrilhaActivity</string>
+    <string name="buttonVoltar1_txt">Voltar</string>
+    <string name="buttonVoltar2_txt">Voltar</string>
+    <string name="btn_start_stop_txt">Iniciar Trilha</string>
+    <string name="buttonVoltar3_txt">Voltar</string>
 </resources>

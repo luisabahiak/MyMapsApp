@@ -5,9 +5,12 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,6 +33,7 @@ public class VisualizarMapaHistoricoActivity extends FragmentActivity implements
     private GoogleMap mMap;
     private TrilhaDB trilhaDB;
     private long idTrilha;
+    private Button btnVoltar;
 
     private TextView txtNome, txtInicio, txtDistancia, txtDuracao, txtVelMax, txtVelMedia;
 
@@ -37,7 +41,7 @@ public class VisualizarMapaHistoricoActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_mapa_historico);
-
+        EdgeToEdge.enable(this);
         trilhaDB = new TrilhaDB(this);
 
         // Vinculação dos componentes textuais sobrepostos
@@ -47,6 +51,7 @@ public class VisualizarMapaHistoricoActivity extends FragmentActivity implements
         txtDuracao = findViewById(R.id.txt_hist_duracao);
         txtVelMax = findViewById(R.id.txt_hist_vel_max);
         txtVelMedia = findViewById(R.id.txt_hist_vel_media);
+        btnVoltar = findViewById(R.id.buttonVoltar1);
 
         // Resgata os dados básicos enviados pela tela de listagem
         idTrilha = getIntent().getLongExtra("TRILHA_ID", -1);
@@ -66,7 +71,16 @@ public class VisualizarMapaHistoricoActivity extends FragmentActivity implements
 
         // Executa os cálculos estatísticos das métricas
         calcularEExibirMetricas(dataInicio, dataFim);
+
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

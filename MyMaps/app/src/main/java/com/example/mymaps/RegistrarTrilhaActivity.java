@@ -245,7 +245,6 @@ public class RegistrarTrilhaActivity extends FragmentActivity implements OnMapRe
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
-        // --- CORREÇÃO 1: LEITURA DINÂMICA DO TIPO DE MAPA ---
         SharedPreferences sharedPref = getSharedPreferences("ConfigsAppTrilhas", Context.MODE_PRIVATE);
         String tipoMapa = sharedPref.getString("tipo_mapa", "vetorial");
 
@@ -309,21 +308,18 @@ public class RegistrarTrilhaActivity extends FragmentActivity implements OnMapRe
                 .fillColor(Color.argb(50, 0, 0, 255))
                 .strokeWidth(2));
 
-        // --- CORREÇÃO 2: LEITURA DINÂMICA DA ORIENTAÇÃO DA NAVEGAÇÃO ---
         SharedPreferences sharedPref = getSharedPreferences("ConfigsAppTrilhas", Context.MODE_PRIVATE);
         String formaNav = sharedPref.getString("forma_nav", "north_up");
 
         if (formaNav.equals("course_up") && location.hasBearing()) {
-            // Se for Course Up, cria uma posição de câmera rotacionada com os graus (bearing) fornecidos pelo GPS
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(latLngAtual)
                     .zoom(16f)
-                    .bearing(location.getBearing()) // Alinha o topo do mapa com o rumo do usuário
+                    .bearing(location.getBearing())
                     .tilt(0)
                     .build();
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         } else {
-            // Se for North Up (ou o GPS ainda não tiver bearing), mantém o Norte fixo para cima
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngAtual, 16f));
         }
     }

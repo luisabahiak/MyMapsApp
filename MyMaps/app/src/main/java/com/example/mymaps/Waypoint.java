@@ -4,14 +4,13 @@ import android.location.Location;
 
 public class Waypoint {
     private int id;
-    private long trilhaId; // Referência para a tabela de Trilhas
+    private long trilhaId;
     private double latitude;
     private double longitude;
     private double altitude;
 
     public Waypoint() {}
 
-    // Construtor atualizado recebendo o id da trilha corrente
     public Waypoint(Location location, long trilhaId) {
         this.trilhaId = trilhaId;
         this.latitude = location.getLatitude();
@@ -19,7 +18,6 @@ public class Waypoint {
         this.altitude = location.getAltitude();
     }
 
-    // Getters e Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

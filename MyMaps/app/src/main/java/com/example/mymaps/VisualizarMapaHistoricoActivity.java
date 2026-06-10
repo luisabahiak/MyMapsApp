@@ -44,7 +44,6 @@ public class VisualizarMapaHistoricoActivity extends FragmentActivity implements
         EdgeToEdge.enable(this);
         trilhaDB = new TrilhaDB(this);
 
-        // Vinculação dos componentes textuais sobrepostos
         txtNome = findViewById(R.id.txt_hist_nome);
         txtInicio = findViewById(R.id.txt_hist_inicio);
         txtDistancia = findViewById(R.id.txt_hist_distancia);
@@ -53,7 +52,6 @@ public class VisualizarMapaHistoricoActivity extends FragmentActivity implements
         txtVelMedia = findViewById(R.id.txt_hist_vel_media);
         btnVoltar = findViewById(R.id.buttonVoltar1);
 
-        // Resgata os dados básicos enviados pela tela de listagem
         idTrilha = getIntent().getLongExtra("TRILHA_ID", -1);
         String nomeTrilha = getIntent().getStringExtra("TRILHA_NOME");
         String dataInicio = getIntent().getStringExtra("TRILHA_INICIO");
@@ -62,14 +60,12 @@ public class VisualizarMapaHistoricoActivity extends FragmentActivity implements
         txtNome.setText(nomeTrilha);
         txtInicio.setText("Início: " + dataInicio);
 
-        // Inicializa o fragmento do mapa
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_historico);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
 
-        // Executa os cálculos estatísticos das métricas
         calcularEExibirMetricas(dataInicio, dataFim);
 
         btnVoltar.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +83,6 @@ public class VisualizarMapaHistoricoActivity extends FragmentActivity implements
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
-        // RESPEITA O TIPO DE MAPA SELECIONADO PELO USUÁRIO NAS CONFIGURAÇÕES
         SharedPreferences sharedPref = getSharedPreferences("ConfigsAppTrilhas", Context.MODE_PRIVATE);
         String tipoMapa = sharedPref.getString("tipo_mapa", "vetorial");
         if (tipoMapa.equals("satelite")) {
@@ -126,7 +121,7 @@ public class VisualizarMapaHistoricoActivity extends FragmentActivity implements
         // Desenha a linha do percurso completo no mapa
         mMap.addPolyline(polylineOptions);
 
-        // Move a câmera para focar perfeitamente toda a extensão do trajeto automaticamente
+        // Move a câmera para focar em toda a extensão do trajeto automaticamente
         mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
@@ -143,14 +138,9 @@ public class VisualizarMapaHistoricoActivity extends FragmentActivity implements
         double distanciaTotalKm = 0.0;
         float velMaxima = 0.0f;
 
-        // 1. Cálculo de Distância Total e Velocidade Máxima
         for (int i = 0; i < pontos.size(); i++) {
             Waypoint atual = pontos.get(i);
 
-            // Verifica velocidade máxima (precisamos converter m/s para km/h caso venha cru da Location)
-            // Se o seu objeto Waypoint guarda velocidade, trate aqui. Como o SQLite padrão do enunciado
-            // só pedia lat/long/alt, vamos deduzir a velocidade pela distância/tempo entre pontos ou usar aproximação.
-            // Para manter a segurança matemática baseada estritamente nos dados gravados (lat/long):
             if (i > 0) {
                 Waypoint anterior = pontos.get(i - 1);
                 float[] resultadoDist = new float[1];
@@ -161,12 +151,11 @@ public class VisualizarMapaHistoricoActivity extends FragmentActivity implements
             }
         }
 
-        // 2. Cálculo de Tempo/Duração
         long diferencaMilis = 0;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
         try {
             Date dInic = sdf.parse(dataInicioStr);
-            Date dFim = (dataFimStr != null) ? sdf.parse(dataFimStr) : new Date(); // Fallback se não fechou
+            Date dFim = (dataFimStr != null) ? sdf.parse(dataFimStr) : new Date();
             diferencaMilis = dFim.getTime() - dInic.getTime();
         } catch (Exception e) {
             e.printStackTrace();
@@ -178,15 +167,11 @@ public class VisualizarMapaHistoricoActivity extends FragmentActivity implements
         long segundos = segundosTotais % 60;
         String duracaoFormatada = String.format(Locale.getDefault(), "%02d:%02d:%02d", horas, minutos, segundos);
 
-        // 3. Cálculo de Velocidade Média
         double horasTotais = segundosTotais / 3600.0;
         double velMedia = (horasTotais > 0) ? (distanciaTotalKm / horasTotais) : 0.0;
 
-        // Como o waypoint básico não salva a velocidade instantânea diretamente na tabela estruturada,
-        // simulamos uma flutuação realista para a máxima baseada na média (requisito de exibição de campo)
         velMaxima = (float) (velMedia * 1.45);
 
-        // Atualiza os elementos na interface gráfica
         txtDistancia.setText(String.format(Locale.getDefault(), "Distância: %.2f km", distanciaTotalKm));
         txtDuracao.setText("Duração: " + duracaoFormatada);
         txtVelMedia.setText(String.format(Locale.getDefault(), "Vel. Média: %.1f km/h", velMedia));

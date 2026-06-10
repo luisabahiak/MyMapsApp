@@ -45,8 +45,6 @@ public class TrilhaDB extends SQLiteOpenHelper {
     @Override
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
-        // Habilita o suporte a chaves estrangeiras para que o ON DELETE CASCADE funcione
-        // Isso garante que ao apagar uma trilha, todos os waypoints dela sumam automaticamente
         db.execSQL("PRAGMA foreign_keys=ON;");
     }
 
@@ -91,10 +89,6 @@ public class TrilhaDB extends SQLiteOpenHelper {
         cursor.close();
         return waypoints;
     }
-
-    // --- MÉTODOS REQUISITADOS PARA A TELA DE CONSULTA ---
-
-    // 1. Recupera a lista de todas as trilhas cadastradas para exibir no histórico
     public ArrayList<TrilhaModel> recuperarTodasAsTrilhas() {
         ArrayList<TrilhaModel> lista = new ArrayList<>();
         Cursor cursor = getWritableDatabase().rawQuery("SELECT id, nome, data_inicio, data_fim FROM trilhas ORDER BY id DESC", null);
@@ -110,24 +104,15 @@ public class TrilhaDB extends SQLiteOpenHelper {
         cursor.close();
         return lista;
     }
-
-    // 2. Permite alterar o nome de uma trilha selecionada
     public void editarNomeTrilha(long id, String novoNome) {
         ContentValues values = new ContentValues();
         values.put("nome", novoNome);
         getWritableDatabase().update("trilhas", values, "id = ?", new String[]{String.valueOf(id)});
     }
-
-    // 3. Apaga uma trilha específica por ID (o CASCADE limpa os waypoints)
     public void apagarTrilhaEspecifica(long id) {
         getWritableDatabase().delete("trilhas", "id = ?", new String[]{String.valueOf(id)});
     }
-
-    // 4. Apaga trilhas contidas em um determinado intervalo de data
-    // Formato esperado das datas recebidas no parâmetro: "dd/MM/yyyy"
     public void apagarTrilhasPorIntervaloData(String dataInicio, String dataFim) {
-        // Convertemos as strings brasileiras "dd/MM/yyyy..." para ordenação comparável do SQLite
-        // Usamos substr para ordenar ano-mes-dia na query
         String query = "DELETE FROM trilhas WHERE " +
                 "substr(data_inicio,7,4)||substr(data_inicio,4,2)||substr(data_inicio,1,2) " +
                 "BETWEEN ? AND ?";
@@ -137,8 +122,6 @@ public class TrilhaDB extends SQLiteOpenHelper {
 
         getWritableDatabase().execSQL(query, new String[]{dtStartFormat, dtEndFormat});
     }
-
-    // 5. Apaga todas as trilhas percorridas
     public void apagaTrilha() {
         getWritableDatabase().execSQL("DELETE FROM waypoints");
         getWritableDatabase().execSQL("DELETE FROM trilhas");

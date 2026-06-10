@@ -3,7 +3,6 @@ package com.example.mymaps;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
@@ -41,7 +39,7 @@ public class ConsultarTrilhasActivity extends AppCompatActivity {
 
         atualizarLista();
 
-        // Clique curto: Consultar trajeto no mapa
+        //Consultar trajeto no mapa
         listViewTrilhas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -55,7 +53,7 @@ public class ConsultarTrilhasActivity extends AppCompatActivity {
             }
         });
 
-        // Clique longo: Opções de Editar nome ou Apagar trilha específica
+        //Opções de Editar nome ou Apagar trilha específica
         listViewTrilhas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -64,7 +62,6 @@ public class ConsultarTrilhasActivity extends AppCompatActivity {
             }
         });
 
-        // Botão Apagar Tudo
         btnLimparTudo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +79,6 @@ public class ConsultarTrilhasActivity extends AppCompatActivity {
             }
         });
 
-        // Botão Apagar por Intervalo de Data
         btnLimparIntervalo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +96,6 @@ public class ConsultarTrilhasActivity extends AppCompatActivity {
 
     private void atualizarLista() {
         listaTrilhas = trilhaDB.recuperarTodasAsTrilhas();
-        // Usamos um layout nativo simples do Android para textos brancos na lista escura
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaTrilhas);
         listViewTrilhas.setAdapter(adapter);
     }
